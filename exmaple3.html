@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 시간</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+    function clock(){
+        const div = document.createElement('div')
+        const h1 = document.createElement('h1');
+        const h2 = document.createElement('h2');
+
+        let txt = 'Hello world!'
+        let timeTxt = `It is ${new Date().toLocaleTimeString()}.`
+
+        h1.innerHTML = txt
+        h2.innerHTML = timeTxt
+
+        div.appendChild(h1);
+        div.appendChild(h2);
+
+        document.querySelector('#root').innerHTML = div.innerHTML
+    }
+
+    setInterval(clock,1000)
+    </script>
+</body>
+</html>
