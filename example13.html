@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 시간</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+
+        class GuguList extends React.Component{
+            renderList(n){
+                let g = parseInt(n) // String to Intger
+                let arr = Array(9).fill(null) // react 게임 
+                // [null,null,null,null,null,null,null,null,null]
+                //    0    1    2    3   4    5    6    7    8
+                return (
+                    arr.map( (v,k)=>{
+                        return <li key={k}>{g} * {k+1} = {g*(k+1)}</li>
+                    } )
+                )
+            }
+
+            render(){
+                return(
+                    <>
+                        <li>{this.props.gugu}단 입니다.</li>
+                        {this.renderList(this.props.gugu)}
+                    </>
+                )
+            }
+        }
+
+        class GuguForm extends React.Component{
+            /*
+                props{
+                    onSubmit: f () { ...  }
+                }
+            */
+            render(){
+                return(
+                    <>
+                        <li>
+                            <h2>몇단을 구하시겠습니까?</h2>
+                            <form onSubmit={this.props.onSubmit}>
+                                <input type="number" name="gugu" placeholder="숫자를 입력해주세요." />
+                                <input type="submit" value="조회" />
+                            </form>
+                        </li>
+
+                        {this.props.isSubmit ? <GuguList gugu={this.props.gugu} /> : '몇단을 구해볼까나..' }
+                    </>
+                )
+            }
+        }
+
+        class App extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    isSubmit:false,
+                    gugu: 0,
+                }
+            }
+
+            onSubmit = (e) =>{
+                e.preventDefault() // form submit 이벤트 막기
+                                           
+                this.setState({
+                    isSubmit:true,
+                    gugu:e.target.gugu.value,
+                }) // 상태값을 변경한다.
+            }
+
+            render() {
+                return(
+                    <ul>
+                        <GuguForm 
+                            isSubmit={this.state.isSubmit}
+                            onSubmit={this.onSubmit}
+                            gugu={this.state.gugu}
+                        />
+                    </ul>
+                )
+            }
+        }
+
+       ReactDOM.render(
+           <App />,
+           document.querySelector('#root')
+       )
+    </script>
+</body>
+</html>

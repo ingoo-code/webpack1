@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 시간</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+    class App extends React.Component{
+        constructor(props){
+            super(props)
+            this.state = {
+                counter:0
+            }
+        }
+
+        onChange = (e) => {
+            this.setState({ counter:e.target.value })
+        }
+
+        upBtn = (e) => {
+            this.setState({ counter:this.state.counter+1 })
+        }
+
+        downBtn = (e) => {
+            this.setState({ counter:this.state.counter-1 })
+        }
+
+        render(){
+            return(
+                <>
+                    <input type="number" name="counter" value={this.state.counter} onChange={this.onChange} />
+                    <button onClick={this.upBtn}>+</button>
+                    <button onClick={this.downBtn}>-</button>
+                </>
+            )
+        }
+    }
+    ReactDOM.render(
+        <App />,
+        document.querySelector('#root')
+    )
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 시간</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+        class A extends React.Component{
+            render(){
+                return <>{this.props.name}</>;
+            }
+        }
+
+        class B extends React.Component{
+            /*
+                props:{
+                    text:"hello world"
+                }
+            */
+            render(){
+                return <><A name={this.props.text}/></>;
+            }
+        }
+
+        class C extends React.Component{
+            /*
+            props {
+                value:"hello world!"
+            }
+
+            
+            */
+            render(){
+                return <><B text={this.props.value} /></>;
+            }
+        }
+
+
+        class App extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    txt:'hello world!'
+                }
+            }
+
+            render(){
+                return <div><C value={this.state.txt}/></div>;
+            }
+        }
+
+        ReactDOM.render(
+            <App/>,
+            document.querySelector('#root')
+        )
+    </script>
+</body>
+</html>

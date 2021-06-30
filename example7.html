@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>자바스크립트 시간</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Square extends React.Component{
+            render(){
+                return (
+                    <button onClick={this.props.handleClick}>
+                        {this.props.value}
+                    </button>
+                )
+            }
+        }
+
+        class Board extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    squares:Array(9).fill(null),
+                    xIsNext:false,
+                }
+            }
+
+            renderSquare(n){
+                return (<Square 
+                            value={n} 
+                            onClick={this.handleClick(n)}
+                        />
+                        )
+            }
+
+            handleClick(n){
+                let squares = {...this.state.squares}
+                squares[n] = this.state.xIsNext ? 'O' : 'X' 
+                this.setState({squares,xIsNext:!this.state.xIsNext})
+            }
+
+            render(){
+                return (
+                    <div className="">
+                        <div className="status">{this.state.xIsNext ? 'O' : 'X' }</div>
+                        <div className="board-row">
+                            {this.renderSquare(0)}
+                            {this.renderSquare(1)}
+                            {this.renderSquare(2)}
+                        </div>
+                        <div className="board-row">
+                            {this.renderSquare(3)}
+                            {this.renderSquare(4)}
+                            {this.renderSquare(5)}
+                        </div>
+                        <div className="board-row">
+                            {this.renderSquare(6)}
+                            {this.renderSquare(7)}
+                            {this.renderSquare(8)}
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        class Game extends React.Component{
+            render(){
+                return (
+                    <div className="game">
+                        <div className="">
+                            <Board />
+                        </div>
+                        <div className="">
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Game />,
+            document.querySelector('#root')
+        )
+    </script>
+</body>
+</html>

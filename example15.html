@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 시간</title>
+    <!--   -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="./example6.css">
+</head>
+<body>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+
+    class Header extends React.Component{
+        render(){
+            return(
+                <ul className="comment">
+                    {this.props.children}
+                </ul>
+            )
+        }
+    }
+
+    class Logo extends React.Component{
+        render(){
+            return(
+                <li className="comment-form">  
+                    <form>
+                        <h4>댓글쓰기 <span>(3)</span></h4>
+                        <span className="ps_box">
+                            <input type="text" placeholder="댓글내용을 입력해주세요." className="int"/>
+                        </span>
+                        <input type="submit" value="등록" className="btn"/>
+                    </form>
+                </li>
+            )
+        }
+    }
+
+    class Menu extends React.Component{
+        render(){
+            return (
+                <>
+                    <MenuItem />
+                    <MenuItem />
+                    <MenuItem />
+                    <MenuItem />
+                </>
+            )
+        }
+    }
+
+    class MenuItem extends React.Component{
+        render(){
+            return (
+                <li>  
+                    <ul class="comment-row">
+                        <li class="comment-id">web7722</li>
+                        <li class="comment-content">안녕하세요 방가</li>
+                        <li class="comment-date">20221-06-28</li>
+                    </ul>
+                </li>
+            )
+        }
+    }
+
+    class App extends React.Component{
+        state = {
+            text:'Hello world!!!!!!!'
+        }
+
+        render(){
+            return(
+                <Header>
+                    <Logo />
+                    <Menu />
+                </Header>
+            )
+        }
+
+    }
+
+    ReactDOM.render(
+        <App />,
+        document.querySelector('#root')
+    )
+    </script>
+        <!--
+        <ul class="comment"> Haeder
+            <li>  
+                <ul class="comment-row">
+                    <li class="comment-id">web7722</li>
+                    <li class="comment-content">안녕하세요 방가</li>
+                    <li class="comment-date">20221-06-28</li>
+                </ul>
+            </li>
+            <li>
+                <ul class="comment-row">
+                    <li class="comment-id">web7722</li>
+                    <li class="comment-content">안녕하세요 방가</li>
+                    <li class="comment-date">20221-06-28</li>
+                </ul>
+            </li>
+            <li>
+                <ul class="comment-row">
+                    <li class="comment-id">web7722</li>
+                    <li class="comment-content">안녕하세요 방가</li>
+                    <li class="comment-date">20221-06-28</li>
+                </ul>
+            </li>
+            
+        </ul> Header
+        -->
+    
+</body>
+</html>

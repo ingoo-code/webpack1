@@ -51,51 +51,84 @@
     <script type="text/babel">
 
         class ComponentForm extends React.Component{
-            redner(){
-                return ;
+            render(){
+                return (
+                    <li className="comment-form">
+                        <form onSubmit={ this.props.onSubmit }>
+                            <h4>댓글쓰기 <span>({this.props.length})</span></h4>
+                            <span className="ps_box">
+                                <input type="text" name="comment-content" placeholder="댓글내용을 입력해주세요." className="int"/>
+                            </span>
+                            <input type="submit" value="등록" className="btn"/>
+                        </form>
+                    </li>
+                );
             }
         }
 
         class ComponentRow extends React.Component{
             render(){
-                return ;
+                return (
+                    <li>
+                        <ul className="comment-row">
+                            <li className="comment-id">{this.props.userid}</li>
+                            <li className="comment-content">{this.props.content}</li>
+                            <li className="comment-date">{this.props.date}</li>
+                        </ul>
+                    </li>
+                );
             }
         }
 
         class CommentApp extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    comments:[
+                        {userid:'web7722',content:'안녕하세요!!!',date:'2021-06-30'},
+                        {userid:'web7722',content:'안녕하세요~~~~',date:'2021-06-30'},
+                        {userid:'web7722',content:'안녕하세요!!!!!',date:'2021-06-30'},
+                    ]
+                }
+            }
+            
+
+            onSubmit = (e) => {
+                e.preventDefault() // 기존이벤트를 막는거
+                // console.log(e.target) // e.target 이벤트가발생한 DOM form DOM 
+                let input = e.target.querySelector('.int').value
+                let obj = {userid:'web7722',content:input,date:'2021-06-30'}
+                //this.state.comments.push(obj)
+                
+                let {comments} = {...this.state}
+                comments.push(obj)
+
+                this.setState({comments:comments})
+                e.target.reset()
+            }
+
+            renderRow(){
+                let {comments}  = {...this.state}
+                return(
+                    comments.map( (value,key)=>(
+                            <ComponentRow 
+                                key={key}
+                                userid={value.userid} 
+                                content={value.content}
+                                date={value.date}
+                            />
+                    ))
+                )
+            }
+
             render(){
                 return(
                     <ul className="comment">
-                        <li>
-                            <ul className="comment-row">
-                                <li className="comment-id">web7722</li>
-                                <li className="comment-content">안녕하세요 방가</li>
-                                <li className="comment-date">20221-06-28</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul className="comment-row">
-                                <li className="comment-id">web7722</li>
-                                <li className="comment-content">안녕하세요 방가</li>
-                                <li className="comment-date">20221-06-28</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul className="comment-row">
-                                <li className="comment-id">web7722</li>
-                                <li className="comment-content">안녕하세요 방가</li>
-                                <li className="comment-date">20221-06-28</li>
-                            </ul>
-                        </li>
-                        <li className="comment-form">
-                            <form>
-                                <h4>댓글쓰기 <span>(3)</span></h4>
-                                <span className="ps_box">
-                                    <input type="text" placeholder="댓글내용을 입력해주세요." className="int"/>
-                                </span>
-                                <input type="submit" value="등록" className="btn"/>
-                            </form>
-                        </li>
+                        <ComponentForm 
+                            length={this.state.comments.length}
+                            onSubmit={this.onSubmit}
+                        />
+                        {this.renderRow()}
                     </ul>
                 )
             }

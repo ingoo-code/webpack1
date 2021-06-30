@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 시간</title>
+    <!--   -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="./example6.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="text/babel">
+    class Header extends React.Component{
+        render(){
+            return(
+                <div className="header">
+                    {this.props.children}
+                </div>
+            )
+        }
+    }
+    class Logo extends React.Component{
+        render(){
+            return(
+                <h1>Logo</h1>
+            )
+        }
+    }
+
+    class Menu extends React.Component{
+        render(){
+            return(
+                <ul>
+                    <li>menu1</li>
+                    <li>menu2</li>
+                    <li>menu3</li>
+                    <li>menu4</li>
+                </ul>
+            )
+        }
+    }
+
+    class Utill extends React.Component{
+        login = () => {
+            return (
+                <>
+                    <li>Login</li>
+                    <li>Join</li>
+                </>
+            )
+        }
+
+        logout = () => {
+            return (
+                <>
+                    <li onClick={this.props.onDelete}>Logout</li>
+                    <li>Info</li>
+                </>
+            )
+        }
+
+        render(){
+            return(
+                <ul>
+                    {this.props.isLogin ? this.logout() : this.login()}
+                </ul>
+            )
+        }
+    }
+
+    class LoginBox extends React.Component{
+        state = {
+            userid:'',
+            userpw:''
+        }
+
+        handleChange = (e) => {
+            this.setState({ [e.target.name]:e.target.value })
+        }
+
+        handleSubmit = (e) => {
+            e.preventDefault()
+            this.props.onCreate(this.state)
+            this.setState({
+                userid:'',
+                userpw:'',
+            })
+        }
+
+        render(){
+            return(
+                <form onSubmit={this.handleSubmit}>
+                    <input 
+                        type="text" 
+                        placeholder='아이디를 입력해주세요.'
+                        value={this.state.userid}
+                        onChange={this.handleChange}
+                        name="userid"
+                    />
+                    <input 
+                        type="password" 
+                        placeholder='패스워드를 입력해주세요.'
+                        value={this.state.userpw}
+                        onChange={this.handleChange}
+                        name="userpw"
+                    />
+                    <button type="submit">로그인</button>
+                </form>
+            )
+        }
+    }
+
+    class App extends React.Component{
+        state = {
+            isLogin:false,
+        }
+
+        handleCreate = (data) => {
+            let {userid,userpw} = data
+            if (userid === 'admin' && userpw === 'admin') {
+                this.setState({isLogin:true})
+            }
+        }
+
+        handleDelete = () => {
+            this.setState({isLogin:false})
+        }
+
+        render(){
+            return(
+                <>
+                    <Header>
+                        <Logo />
+                        <Menu />
+                        <Utill isLogin={this.state.isLogin} onDelete={this.handleDelete} />
+                    </Header>
+                    {this.state.isLogin ? '' : <LoginBox onCreate={this.handleCreate}/>}
+                </>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <App />,
+        document.querySelector('#root')
+    )
+
