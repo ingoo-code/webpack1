@@ -12,132 +12,235 @@
 </head>
 <body>
     
-    <div id="root">
-        <!--
-        <ul class="comment">
-            <li>
-                <ul class="comment-row">
-                    <li class="comment-id">web7722</li>
-                    <li class="comment-content">안녕하세요 방가</li>
-                    <li class="comment-date">20221-06-28</li>
-                </ul>
-            </li>
-            <li>
-                <ul class="comment-row">
-                    <li class="comment-id">web7722</li>
-                    <li class="comment-content">안녕하세요 방가</li>
-                    <li class="comment-date">20221-06-28</li>
-                </ul>
-            </li>
-            <li>
-                <ul class="comment-row">
-                    <li class="comment-id">web7722</li>
-                    <li class="comment-content">안녕하세요 방가</li>
-                    <li class="comment-date">20221-06-28</li>
-                </ul>
-            </li>
-            <li class="comment-form">
-                <form>
-                    <h4>댓글쓰기 <span>(3)</span></h4>
-                    <span class="ps_box">
-                        <input type="text" placeholder="댓글내용을 입력해주세요." class="int"/>
-                    </span>
-                    <input type="submit" value="등록" class="btn"/>
-                </form>
-            </li>
-        </ul>
-        -->
-    </div>
-    <script type="text/babel">
-
-        class ComponentForm extends React.Component{
-            render(){
-                return (
-                    <li className="comment-form">
-                        <form onSubmit={ this.props.onSubmit }>
-                            <h4>댓글쓰기 <span>({this.props.length})</span></h4>
-                            <span className="ps_box">
-                                <input type="text" name="comment-content" placeholder="댓글내용을 입력해주세요." className="int"/>
-                            </span>
-                            <input type="submit" value="등록" className="btn"/>
-                        </form>
-                    </li>
-                );
-            }
+<div id="root">
+    <!--
+    <ul class="comment">
+        <li>
+            <ul class="comment-row">
+                <li class="comment-id">web7722</li>
+                <li class="comment-content">안녕하세요 방가</li>
+                <li class="comment-date">20221-06-28</li>
+            </ul>
+        </li>
+        <li>
+            <ul class="comment-row">
+                <li class="comment-id">web7722</li>
+                <li class="comment-content">안녕하세요 방가</li>
+                <li class="comment-date">20221-06-28</li>
+            </ul>
+        </li>
+        <li>
+            <ul class="comment-row">
+                <li class="comment-id">web7722</li>
+                <li class="comment-content">안녕하세요 방가</li>
+                <li class="comment-date">20221-06-28</li>
+            </ul>
+        </li>
+        <li class="comment-form">
+            <form>
+                <h4>댓글쓰기 <span>(3)</span></h4>
+                <span class="ps_box">
+                    <input type="text" placeholder="댓글내용을 입력해주세요." class="int"/>
+                </span>
+                <input type="submit" value="등록" class="btn"/>
+            </form>
+        </li>
+    </ul>
+    -->
+</div>
+<script type="text/babel">
+    /*
+        JSX = javascript + xml
+    */
+    class CommentForm extends React.Component{
+        state = {
+            content:'',
         }
 
-        class ComponentRow extends React.Component{
-            render(){
-                return (
-                    <li>
-                        <ul className="comment-row">
-                            <li className="comment-id">{this.props.userid}</li>
-                            <li className="comment-content">{this.props.content}</li>
-                            <li className="comment-date">{this.props.date}</li>
-                        </ul>
-                    </li>
-                );
-            }
+        handleChange = (e) => {
+            this.setState({[e.target.name]:e.target.value})
         }
 
-        class CommentApp extends React.Component{
-            constructor(props){
-                super(props)
-                this.state = {
-                    comments:[
-                        {userid:'web7722',content:'안녕하세요!!!',date:'2021-06-30'},
-                        {userid:'web7722',content:'안녕하세요~~~~',date:'2021-06-30'},
-                        {userid:'web7722',content:'안녕하세요!!!!!',date:'2021-06-30'},
-                    ]
-                }
-            }
-            
+        handleSubmit = (e) => {
+            e.preventDefault()
 
-            onSubmit = (e) => {
-                e.preventDefault() // 기존이벤트를 막는거
-                // console.log(e.target) // e.target 이벤트가발생한 DOM form DOM 
-                let input = e.target.querySelector('.int').value
-                let obj = {userid:'web7722',content:input,date:'2021-06-30'}
-                //this.state.comments.push(obj)
-                
-                let {comments} = {...this.state}
-                comments.push(obj)
+            this.props.onCreate(this.state.content)
+            this.setState({content:''})
+        }
 
-                this.setState({comments:comments})
-                e.target.reset()
-            }
-
-            renderRow(){
-                let {comments}  = {...this.state}
-                return(
-                    comments.map( (value,key)=>(
-                            <ComponentRow 
-                                key={key}
-                                userid={value.userid} 
-                                content={value.content}
-                                date={value.date}
+        render(){
+            return (
+                <li className="comment-form">
+                    <form onSubmit={this.handleSubmit}>
+                        <h4>댓글쓰기 <span>({this.props.count})</span></h4>
+                        <span className="ps_box">
+                            <input 
+                                type="text" 
+                                placeholder="댓글내용을 입력해주세요." 
+                                className="int" 
+                                name="content"
+                                value={this.state.content}
+                                onChange={this.handleChange}
                             />
-                    ))
-                )
-            }
+                        </span>
+                        <input type="submit" value="등록" className="btn" />
+                    </form>
+                </li>
+            );
+        }
+    }
+    class CommentList extends React.Component{
 
-            render(){
-                return(
-                    <ul className="comment">
-                        <ComponentForm 
-                            length={this.state.comments.length}
-                            onSubmit={this.onSubmit}
-                        />
-                        {this.renderRow()}
-                    </ul>
-                )
+        state = {
+            content:'',
+            key:Infinity,
+        }
+
+        handleClick = (key) => {
+            this.setState({key:key})
+        }
+        // 
+
+        handleChange = (e) => {
+            this.setState({ [e.target.name]:e.target.value })
+        }
+
+        handleEnter = (e) => {
+            if(e.key === 'Enter'){
+                let {key,content} = {...this.state}
+                this.props.onUpdate(key,content)
+                this.setState({key:Infinity,content:''})
             }
         }
 
-        ReactDOM.render(
-            <CommentApp />,
-            document.querySelector('#root')
-        )
-    </script>
+        inputBox = (content) => {
+            return(
+                <input
+                    type="text" 
+                    className="comment-update-input" 
+                    name="content"
+                    defaultValue={content}
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleEnter}
+                />
+                )
+        }
+
+        renderList = () => {
+            return(
+                this.props.items.map((item,key)=>{
+                    return(
+                        <li key={key}>
+                            <ul className="comment-row">
+                                <li className="comment-id">{item.userid}</li>
+                                <li className="comment-content">
+                                    
+                                    <span onClick={()=>{ this.handleClick(key) }}>
+                                        {key === this.state.key ? this.inputBox(item.content) : item.content}
+                                    </span>
+                                    <span 
+                                        className="comment-delete-btn"
+                                        onClick={ ()=>{this.props.onDelete(key)} }
+                                    >
+                                        X
+                                    </span>
+                                </li>
+                                <li className="comment-date">{item.date}</li>
+                            </ul>
+                        </li>
+                    )
+                })
+            )
+        }
+
+        input = 0
+
+        render(){
+            return (
+                <>
+                    {this.renderList()}
+                </>
+            );
+        }
+    }
+
+    class CommentLayout extends React.Component{
+        render(){
+            return(
+                <ul className="comment">
+                    {this.props.children}
+                </ul>
+            )
+        }
+    }
+
+    class Comment extends React.Component{ // 모든 댓글기능이 다그려지는 역활
+        state = {
+            list:[]
+        }
+        
+        onCreate = (data) => { // 일단 댓글쓸때 사용할 함수를 미리 선언
+            let item = {userid:'web7722',content:data,date:'2021-07-01'}
+            let {list} = {...this.state} // 내현재 state list를 복사해서 list라는 변수에 넣겠다.
+            let newList = [...list,{...item}] // 새로운변수를 선언해서 list라는 변수와, item이라는 변수를 넣어서 새로만들겠다.
+            
+            this.setState({list:newList})
+        }
+
+        onUpdate = (index,content) => {
+            let {list} = {...this.state}
+            list[index].content = content
+            this.setState({list:list})
+        }
+
+        onDelete = (data) => {
+            //data 변수 1 
+            let {list} = {...this.state}
+            let newList = list.filter((value,index)=>{
+                return data !== index
+            })
+
+            this.setState({list:newList})
+        }
+        
+        componentDidMount(){ //생명주기 
+            let list = [
+                {userid:'web7722',content:'안녕하세요 댓글이에요1',date:'2021-07-01'},
+                {userid:'web7722',content:'안녕하세요 댓글이에요2',date:'2021-07-01'},
+                {userid:'web7722',content:'안녕하세요 댓글이에요3',date:'2021-07-01'},
+            ]
+            this.setState({list:list})
+        }
+
+        render(){
+            return(
+                <CommentLayout>
+                    <CommentForm 
+                        onCreate={this.onCreate}
+                        count={this.state.list.length}
+                    />
+                    <CommentList 
+                        items={this.state.list}
+                        onDelete={this.onDelete}
+                        onUpdate={this.onUpdate}
+                    />
+                </CommentLayout>
+            )
+        }
+    }
+
+    class App extends React.Component{
+        render(){
+            return(
+                <Comment />
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <App />,
+        document.querySelector('#root')
+    )
+</script>
 </body>
 </html>
