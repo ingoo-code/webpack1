@@ -1,0 +1,71 @@
+.nav-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1rem;
+}
+
+.logo{
+    font-size:3rem;
+}
+
+.links-container{
+    height:0;
+    overflow:hidden;
+}
+
+.social-icons{
+    height:0;
+    overflow: hidden;
+}
+
+.nav-toggle {
+    font-size:2.5rem;
+    background:transparent;
+    border-color: transparent;
+}
+
+/* PC CSS style*/
+@media screen and (min-width:800px){
+    
+    .logo{
+        font-size:4rem;
+    }
+
+    .nav-toggle{
+        font-size:0px;
+    }
+
+    .nav-center {
+        max-width:1170px;
+        margin:0 auto;
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        padding:1rem;
+    }
+
+    .links-container{
+        height:auto;
+    }
+
+    .links{
+        display:flex;
+    }
+
+    .links > li > a{
+        margin:0 0.5rem;
+        color:#000;
+        font-size:1.25rem;
+    }
+
+    .social-icons{
+        display:flex;
+        height:auto;
+    }
+
+    .social-icons > li > a{
+        margin: 0 0.5rem;
+        color:#000;
+    }
+}
