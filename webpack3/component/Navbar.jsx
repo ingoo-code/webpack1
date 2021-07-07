@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
 import '../css/Navbar.css'
 import {FaFacebook,FaInstagram,FaTwitter,FaBars} from 'react-icons/fa'
-
+import NavToggle from './NavToggle'
+import { Link } from 'react-router-dom'
 class Navbar extends Component {
     state = {
         social:[
@@ -30,15 +31,33 @@ class Navbar extends Component {
             },
             {
                 id:2,
-                url:'/',
+                url:'/about',
                 text:'about'
             },
             {
                 id:3,
-                url:'/',
+                url:'/projects',
                 text:'projects'
             },
-        ]
+        ],
+        showLinks:false,
+    }
+
+    // showLinks false links-container
+    // showLinks true links-cotnainer on
+    showContainer = () => {
+        let className = this.state.showLinks ? 'links-cotnainer on' : 'links-container'
+        // let className
+        // if(this.state.showLinks){
+        //     className = 'links-cotnainer on'
+        // } else {
+        //     className = 'links-cotnainer'
+        // }
+        return className
+    }
+    
+    handleToggle = () => {
+        this.setState({showLinks:!this.state.showLinks})
     }
 
     render(){
@@ -48,19 +67,17 @@ class Navbar extends Component {
                     {/* logo */}
                     <div className="nav-header">
                         <h1 className="logo">Logo</h1>
-                        <button className="nav-toggle">
-                            <FaBars />
-                        </button>
+                        <NavToggle toggle={this.handleToggle}/>
                     </div>
 
                     {/* Navigation */}
-                    <div className="links-container">
+                    <div className={this.showContainer()}>
                         <ul className="links">
                             {
                                 this.state.menu.map(item=>{
                                     let {id,url,text} = item
                                     return (
-                                        <li key={id}><a href={url}>{text}</a></li>
+                                        <li key={id}><Link to={url}>{text}</Link></li>
                                     )
                                 })
                             }
