@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        let memo = {}
+        function fibo(n){
+            let result;
+
+            if(n in memo){
+                result = memo[n]
+            } else {
+                if(n == 1 || n==2){
+                    result = 1
+                } else {
+                    result = fibo(n-2) + fibo(n-1) 
+                }
+
+                memo[n] = result
+            }
+            return result
+        }
+    </script>
+</head>
+<body>
+    <!-- 
+        DP : 
+        다이나믹 프로그래밍 
+        어려운알고리즘 문제중 한 개념 
+
+        코테 마지막문제에서 자주출제됨. 
+
+        그래프 + DP 
+
+        DP 무엇인가.
+
+
+
+     -->
+</body>
+</html>

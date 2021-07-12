@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+    class CounterFn extends React.Component{
+        constructor(props){
+            super(props)
+            this.state = {
+                number:0
+            }
+            console.log('생성자')
+        }
+
+        onUp = (e) => {
+            this.setState({number:this.state.number+1})
+        }
+
+        onDown = () => {
+            this.setState({number:this.state.number-1})
+        }
+
+        render(){
+            return (
+                <div>
+                    {console.log('render')}
+                    <h1>{this.state.number}</h1>
+                    <button onClick={this.onUp}>+1</button>
+                    <button onClick={this.onDown}>-1</button> {/* JSX */}
+                </div>
+            )
+        }
+    }
+
+    const Counter = () => {
+        console.log('function')
+        const [number,setNumber] = React.useState(0)
+
+        const onUp = () => {
+            setNumber( (s)=>s+1 )
+        }
+
+        const onDown = () => {
+            setNumber( (s) => s-1 )
+        }
+        
+        return (
+            <div>
+                {console.log('render')}
+                <h1>{number}</h1>
+                <button onClick={onUp}>+1</button>
+                <button onClick={onDown}>-1</button>
+            </div>
+        )
+    }
+
+    ReactDOM.render(
+        <Counter />,
+        document.querySelector('#root')
+    )
+    </script>
+</body>
+</html>
