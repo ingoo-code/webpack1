@@ -26,7 +26,7 @@ import {reducer,UP,DOWN} from './reducer'
 
 const Counter = () => {
     const [number,dispatch] = React.useReducer(reducer,0)
-
+    //  
     // const [number,setNumber] = React.useState(0)
     const onUp = () => { 
         dispatch({ type:UP })

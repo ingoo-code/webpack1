@@ -16,6 +16,8 @@ const LayoutStore = (props) => {
     )
 }
 
+// npm install styled-component
+
 export default LayoutStore
 
 //children
